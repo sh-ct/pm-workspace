@@ -1,10 +1,15 @@
 @layer theme, base, components, utilities;
 @import 'tailwindcss/theme.css' layer(theme);
 @import 'tailwindcss/preflight.css' layer(base);
-@import 'tailwindcss/utilities.css';
+@import 'tailwindcss/utilities.css' layer(utilities) source('./app');
 
+/* Import styles and tailwind config from spartan */
 @import '@spartan-ng/brain/hlm-tailwind-preset.css';
-/* You can add global styles to this file, and also import other style files */
+
+/* Imports from shared libraries */
+@source '../../ui';
+@source '../../features/';
+
 
 :root .theme-zinc {
   color-scheme: light;
