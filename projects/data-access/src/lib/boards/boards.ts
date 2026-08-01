@@ -2,7 +2,7 @@ import { inject, Service, signal } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { API_BASE_URL, USE_MOCK_DATA } from 'api-config';
 import { Board } from 'types';
-import { delay, Observable, of } from 'rxjs';
+import { delay, Observable, of, tap } from 'rxjs';
 import { MOCK_BOARDS } from './boards.mock';
 import { BOARDS_ENDPOINTS } from './boards.endpoints';
 import { EntityApiService, EntityApiState } from 'entity';
@@ -50,15 +50,22 @@ export class Boards extends EntityApiService<Board, EntityApiState<Board>> {
       } else {
         throw new Error(`Board not found: ${id}`);
       }
-    } else {
-      return this.#http.get<Board>(`${this.#baseUrl}/${BOARDS_ENDPOINTS.byId(id)}`);
     }
+    return this.#http.get<Board>(`${this.#baseUrl}/${BOARDS_ENDPOINTS.byId(id)}`);
+  }
+
+  deleteBoard(id: string): Observable<void> {
+    if (this.useMockData) {
+      return of(undefined).pipe(delay(MOCK_DATA_DELAY));
+    }
+    return this.#http.delete<void>(`${this.#baseUrl}/${BOARDS_ENDPOINTS.byId(id)}`).pipe(
+      tap(() => this.manager.removeOne(id)),
+    );
   }
 
   /*
   TODO:
    - Create Board
-   - Delete Board
    - Update Board
    - Get Columns?
    - Create Column?
