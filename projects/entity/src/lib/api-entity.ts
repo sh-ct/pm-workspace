@@ -1,5 +1,5 @@
 import { EntityService } from './entity';
-import { Entity, EntityApiState, EntityState } from './entity.model';
+import { Entity, EntityApiState } from './entity.model';
 import { computed } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 

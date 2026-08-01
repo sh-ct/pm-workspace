@@ -17,7 +17,10 @@ export abstract class EntityService<T extends Entity, S extends EntityState<T>> 
   #manager?: EntityManager<T, S>;
   // Lazily get the manager so that it is only set on first access (after state is defined)
   get manager() {
-    return (this.#manager ??= new EntityManager(this));
+    return (this.#manager ??= new EntityManager(
+      () => this.entities(),
+      (newState: Partial<S>) => this.setState(newState),
+    ));
   }
 
   abstract getInitialState(): S;

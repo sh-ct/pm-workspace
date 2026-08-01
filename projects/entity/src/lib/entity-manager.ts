@@ -3,14 +3,18 @@ import { Entities, Entity, EntityState, EntityUpdate } from './entity.model';
 import { EntityService } from './entity';
 
 export class EntityManager<T extends Entity, S extends EntityState<T>> {
-  constructor(private service: EntityService<T, S>) {}
+
+  constructor(
+    private getEntities: () => Entities<T>,
+    private setState: (state: Partial<S>) => void,
+  ) {}
 
   #mutate(
     fn: (entities: Entities<T>) => Entities<T>,
     extraData?: Partial<Omit<S, 'entities'>>,
   ): void {
-    this.service.setState({
-      entities: fn(this.service.entities()),
+    this.setState({
+      entities: fn(this.getEntities()),
       ...extraData,
     } as Partial<S>);
   }
@@ -86,5 +90,13 @@ export class EntityManager<T extends Entity, S extends EntityState<T>> {
       });
       return next;
     }, extraData);
+  }
+
+  clearAll(extraData?: Partial<Omit<S, 'entities'>>): void {
+    this.setAll([], extraData);
+  }
+
+  selectById(id: string): T | undefined {
+    return this.getEntities()[id];
   }
 }
