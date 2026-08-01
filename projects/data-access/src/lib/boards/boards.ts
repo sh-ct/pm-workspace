@@ -1,27 +1,27 @@
-import { inject, Service, Signal, signal, WritableSignal } from '@angular/core';
+import { inject, Service, signal } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { API_BASE_URL, USE_MOCK_DATA } from 'api-config';
-import { Board, LoadedState, StateService } from 'types';
+import { Board } from 'types';
 import { delay, Observable, of } from 'rxjs';
 import { MOCK_BOARDS } from './boards.mock';
 import { BOARDS_ENDPOINTS } from './boards.endpoints';
+import { EntityApiService, EntityApiState } from 'entity';
 
 const MOCK_DATA_DELAY = 1000;
 
 
-
 @Service()
-export class Boards extends StateService<Board> {
-  override _state = signal<LoadedState<Board>>(this.getInitialState());
+export class Boards extends EntityApiService<Board, EntityApiState<Board>> {
+  override _state = signal<EntityApiState<Board>>(this.getInitialState());
   #http = inject(HttpClient);
   #baseUrl = inject(API_BASE_URL);
   useMockData = inject(USE_MOCK_DATA)
 
 
-  override getInitialState(): LoadedState<Board> {
+  override getInitialState(): EntityApiState<Board> {
     return {
       isLoading: false,
-      value: [],
+      entities: {},
       error: null,
     };
   }

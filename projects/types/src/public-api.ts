@@ -6,4 +6,3 @@ export * from './lib/task.model';
 export * from './lib/board.model';
 export * from './lib/column.model';
 export * from './lib/user.model';
-export * from './lib/state.model';
