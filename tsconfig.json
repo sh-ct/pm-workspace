@@ -76,6 +76,7 @@
       "api-config": ["./dist/api-config"],
       "auth": ["./dist/auth"],
       "data-access": ["./dist/data-access"],
+      "entity": ["./dist/entity"],
       "features": ["./dist/features"],
       "types": ["./dist/types"],
       "ui": ["./dist/ui"]
@@ -129,6 +130,12 @@
     },
     {
       "path": "./projects/types/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/entity/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/entity/tsconfig.spec.json"
     }
   ]
 }

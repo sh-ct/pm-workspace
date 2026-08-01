@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { API_BASE_URL } from '@pm-workspace/api';
+import { API_BASE_URL } from 'api-config';
 
 export interface AuthTokens {
   accessToken: string;

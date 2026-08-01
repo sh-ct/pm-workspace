@@ -4,3 +4,4 @@
 
 export * from './lib/api-base-url-token';
 export * from './lib/error.interceptor';
+export * from './lib/use-mock-data-token';
